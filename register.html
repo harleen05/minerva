@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div id="register">
+        <div class="container">
+            <div class="zepto">
+                <div class="zepto-left">
+                    <h1 class="sub-title">Register Here!</h1>
+                    <p>Enter your information correctly</p> 
+                    <p>Further information regarding the event will be mailed.</p>
+                </div>
+                <div class="zepto-right">
+                    <form name="submit-to-google-sheet">
+                        <input type="text" name="Name" placeholder="Your Name" required> <br>
+                        <input type="email" name="Email" id="" placeholder="Your Email" required> <br>
+                        <input type="text" name="Batch" id="" placeholder="Enter Your Batch"> <br>
+                        <input type="submit" value="Submit" />                
+                </form>
+                <span id="msg"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwERzHxJkfL8tMTqKsKGJflDJRAlSKeaR_1A7Nlq7HA8qexTAUZiyaSFLWQoKpVB4oxJA/exec'
+  const form = document.forms['submit-to-google-sheet']
+  const msg= document.getElementById("msg")
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        msg.innerHTML= "Registered Successfully! See you at the event."
+        setTimeout(function(){
+            msg.innerHTML=" "
+        },5000)
+        form.reset()
+      })
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
+</body>
+</html>
